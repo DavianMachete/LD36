@@ -10,6 +10,8 @@ namespace Assets._Project.Scripts.Triggers
     {
         public Behaviour Target;
         public LayerMask Mask;
+
+        public bool AllowRetrigger = false;
         private bool _triggered;
 
         void OnTriggerEnter(Collider collider)
@@ -23,6 +25,16 @@ namespace Assets._Project.Scripts.Triggers
 
 
             _triggered = true;
+        }
+
+        void OnTriggerExit(Collider collider)
+        {
+            if (!AllowRetrigger) return;
+            if ((Mask.value | (1 << collider.gameObject.layer)) != Mask.value)
+                return;
+
+            Debug.Log("Reset trigger");
+            _triggered = false;
         }
     }
 }

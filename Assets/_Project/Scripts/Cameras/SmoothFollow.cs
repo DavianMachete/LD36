@@ -51,5 +51,11 @@ namespace Assets._Project.Scripts.Cameras
             // Always look at the target
             transform.LookAt(target);
         }
+
+        internal void Reset(Transform target)
+        {
+            transform.position = target.position;
+            transform.rotation = target.rotation;
+        }
     }
 }
