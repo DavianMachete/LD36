@@ -19,6 +19,7 @@ GameObject:
   - 114: {fileID: 11415088}
   - 114: {fileID: 11428084}
   - 114: {fileID: 11471646}
+  - 114: {fileID: 11467084}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -32,10 +33,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 123160}
-  m_LocalRotation: {x: -0.010042377, y: 0.96842635, z: -0.03954369, w: -0.24593864}
-  m_LocalPosition: {x: 10.018872, y: 6.699102, z: 17.189941}
+  m_LocalRotation: {x: 0.06922922, y: -0.029612673, z: 0.0020563987, w: 0.99715906}
+  m_LocalPosition: {x: 5.5590096, y: 10.370155, z: -172.51526}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 4.6765, y: -151.50119, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.9428997, y: -363.40198, z: 0.0001}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -307,6 +308,19 @@ MonoBehaviour:
   blurAndFlaresShader: {fileID: 4800000, guid: be6e39cf196f146d5be72fbefb18ed75, type: 3}
   brightPassFilterShader: {fileID: 4800000, guid: 0aeaa4cb29f5d4e9c8455f04c8575c8c,
     type: 3}
+--- !u!114 &11467084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123160}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77794b16cc2c68a428dad4f6a7612c0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  Damping: 0.15
 --- !u!114 &11467548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -339,8 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  distance: 21.82
-  height: 12.31
+  distance: 43.65
+  height: 6.1
   heightDamping: 0.3
   rotationDamping: 0.5
 --- !u!114 &11476766

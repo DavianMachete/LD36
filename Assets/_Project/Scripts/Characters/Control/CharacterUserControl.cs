@@ -15,6 +15,11 @@ namespace Assets._Project.Scripts.Characters.Control
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
+        void OnDisable()
+        {
+            m_Jump = false;
+            m_Move = Vector3.zero;
+        }
 
         private void Start()
         {

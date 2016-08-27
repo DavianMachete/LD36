@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Rocks
+  m_Name: Tree_Base
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -127,6 +127,18 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _SquashAmount
+        second: 1
+      data:
+        first:
+          name: _BaseLight
+        second: 1
+      data:
+        first:
+          name: _AO
+        second: 0
     m_Colors:
       data:
         first:
@@ -135,4 +147,12 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 0.24264705, g: 0.08760886, b: 0.017841697, a: 1}
+        second: {r: 0.3897059, g: 0.15667282, b: 0.0057309745, a: 1}
+      data:
+        first:
+          name: _TreeInstanceScale
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _TreeInstanceColor
+        second: {r: 1, g: 1, b: 1, a: 1}

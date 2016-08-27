@@ -55,6 +55,13 @@ namespace Assets._Project.Scripts.Characters.Control
             m_OrigGroundCheckDistance = m_GroundCheckDistance;
         }
 
+        void OnDisable()
+        {
+            m_Animator.SetFloat("forward", 0);
+            m_Animator.SetFloat("lean", 0);
+            m_Animator.SetBool("grounded", m_IsGrounded);
+            m_Animator.SetFloat("jump", 0);
+        }
 
         public void Move(Vector3 move, bool crouch, bool jump)
         {

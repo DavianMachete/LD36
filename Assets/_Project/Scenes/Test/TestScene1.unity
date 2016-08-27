@@ -684,12 +684,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11471646, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1557165538}
     - target: {fileID: 11476766, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
       propertyPath: focalTransform
+      value: 
+      objectReference: {fileID: 1557165538}
+    - target: {fileID: 11471646, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
+      propertyPath: target
       value: 
       objectReference: {fileID: 1557165538}
     m_RemovedComponents: []
