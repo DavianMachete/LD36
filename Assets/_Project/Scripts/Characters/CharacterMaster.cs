@@ -17,14 +17,14 @@ namespace Assets._Project.Scripts.Characters
 
         public void DisableControl()
         {
-            Debug.Log("Disable control");
+            //Debug.Log("Disable control");
             UserControl.enabled = false;
             CharacterControl.enabled = false;
         }
 
         public void EnableControl()
         {
-            Debug.Log("Enable control");
+            //Debug.Log("Enable control");
             UserControl.enabled = true;
             CharacterControl.enabled = true;
         }

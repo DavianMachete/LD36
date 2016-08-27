@@ -11,6 +11,8 @@ namespace Assets._Project.Scripts.Characters.Control
     [RequireComponent(typeof(Animator))]
     public class CharacterControlComponent : MonoBehaviour
     {
+        public LayerMask GroundMask;
+
         [SerializeField]
         float m_MovingTurnSpeed = 360;
         [SerializeField]
@@ -28,6 +30,8 @@ namespace Assets._Project.Scripts.Characters.Control
         float m_AnimSpeedMultiplier = 1f;
         [SerializeField]
         float m_GroundCheckDistance = 0.1f;
+
+        public float GroundCheckDistance = 0.5f;
 
         Rigidbody m_Rigidbody;
         Animator m_Animator;
@@ -52,15 +56,18 @@ namespace Assets._Project.Scripts.Characters.Control
             m_CapsuleCenter = m_Capsule.center;
 
             m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-            m_OrigGroundCheckDistance = m_GroundCheckDistance;
+            m_OrigGroundCheckDistance = GroundCheckDistance;
         }
 
         void OnDisable()
         {
-            m_Animator.SetFloat("forward", 0);
-            m_Animator.SetFloat("lean", 0);
-            m_Animator.SetBool("grounded", m_IsGrounded);
-            m_Animator.SetFloat("jump", 0);
+            if (m_Animator && m_Animator.isInitialized)
+            {
+                m_Animator.SetFloat("forward", 0);
+                m_Animator.SetFloat("lean", 0);
+                m_Animator.SetBool("grounded", m_IsGrounded);
+                m_Animator.SetFloat("jump", 0);
+            }
         }
 
         public void Move(Vector3 move, bool crouch, bool jump)
@@ -109,7 +116,7 @@ namespace Assets._Project.Scripts.Characters.Control
             {
                 Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
                 float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-                if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, GroundMask, QueryTriggerInteraction.Ignore))
                 {
                     m_Crouching = true;
                     return;
@@ -127,7 +134,7 @@ namespace Assets._Project.Scripts.Characters.Control
             {
                 Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
                 float crouchRayLength = m_CapsuleHeight - m_Capsule.radius * k_Half;
-                if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+                if (Physics.SphereCast(crouchRay, m_Capsule.radius * k_Half, crouchRayLength, GroundMask, QueryTriggerInteraction.Ignore))
                 {
                     m_Crouching = true;
                 }
@@ -167,20 +174,20 @@ namespace Assets._Project.Scripts.Characters.Control
             Vector3 extraGravityForce = (Physics.gravity * m_GravityMultiplier) - Physics.gravity;
             m_Rigidbody.AddForce(extraGravityForce);
 
-            m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : 0.01f;
+            m_GroundCheckDistance = m_Rigidbody.velocity.y < 0 ? m_OrigGroundCheckDistance : GroundCheckDistance;
         }
 
 
         void HandleGroundedMovement(bool crouch, bool jump)
         {
             // check whether conditions are right to allow a jump:
-            if (jump && !crouch && m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Grounded"))
+            if (jump)
             {
                 // jump!
                 m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x, m_JumpPower, m_Rigidbody.velocity.z);
                 m_IsGrounded = false;
                 m_Animator.applyRootMotion = false;
-                m_GroundCheckDistance = 0.1f;
+                m_GroundCheckDistance = GroundCheckDistance;
             }
         }
 
@@ -216,7 +223,7 @@ namespace Assets._Project.Scripts.Characters.Control
 #endif
             // 0.1f is a small offset to start the ray from inside the character
             // it is also good to note that the transform position in the sample assets is at the base of the character
-            if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
+            if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance, GroundMask))
             {
                 m_GroundNormal = hitInfo.normal;
                 m_IsGrounded = true;

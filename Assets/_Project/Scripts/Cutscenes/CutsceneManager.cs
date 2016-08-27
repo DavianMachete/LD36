@@ -23,6 +23,7 @@ namespace Assets._Project.Scripts.Cutscenes
         {
             _cutscenes = new Dictionary<string, Func<IEnumerator>>();
             _cutscenes.Add("cutscene_1", () => Cutscene1());
+            _cutscenes.Add("cutscene_2", () => Cutscene2());
         }
 
 
@@ -70,6 +71,16 @@ namespace Assets._Project.Scripts.Cutscenes
             Character.EnableControl();
         }
 
+        private IEnumerator Cutscene2()
+        {
+            yield return new WaitForEndOfFrame();
+            Character.DisableControl();
+            SetCameraTarget(CS1Params.Monolith.transform.GetChild(0)); // TODO: won't work later
+            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(SetPlayerCamera(1f));
+            Character.EnableControl();
+        }
+
         private Vector3 _lastPlayerCamPosition;
         private Quaternion _lastPlayerCamRotation;
 
@@ -84,14 +95,13 @@ namespace Assets._Project.Scripts.Cutscenes
             _lastPlayerCamRotation = cam.transform.rotation;
         }
 
-        private float SetPlayerCamera()
+        private float SetPlayerCamera(float lerpDuration = 2f)
         {
             var cam = Camera.main;
-            float duration = 2f;
-            cam.GetComponent<PositionLerp>().Lerp(cam.transform.position, _lastPlayerCamPosition, cam.transform.rotation, _lastPlayerCamRotation, duration);
-            StartCoroutine(SetPlayerCameraAfter(duration));
+            cam.GetComponent<PositionLerp>().Lerp(cam.transform.position, _lastPlayerCamPosition, cam.transform.rotation, _lastPlayerCamRotation, lerpDuration);
+            StartCoroutine(SetPlayerCameraAfter(lerpDuration));
 
-            return duration;
+            return lerpDuration;
         }
 
         private IEnumerator SetPlayerCameraAfter(float duration)
