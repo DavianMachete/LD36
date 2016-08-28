@@ -20,6 +20,8 @@ namespace Assets._Project.Scripts.Cutscenes
         public CutscenePuzzleSolvedParams PuzzleSolvedParams;
         public EndCutsceneParams EndParams;
 
+        public BlackBars BlackBars;
+
         private Dictionary<string, Func<IEnumerator>> _cutscenes;
 
         void Start()
@@ -57,12 +59,12 @@ namespace Assets._Project.Scripts.Cutscenes
 
         private void HideCutsceneBorders()
         {
-            // TODO:
+            BlackBars.SlideOut();
         }
 
         private void ShowCutsceneBorders()
         {
-            // TODO:
+            BlackBars.SlideIn();
         }
 
         private IEnumerator Cutscene1()
