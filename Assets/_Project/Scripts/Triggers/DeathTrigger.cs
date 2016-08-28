@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Scripts.Characters;
+using Assets._Project.Scripts.GameStates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Assets._Project.Scripts.Triggers
             if (collider.transform.root.GetComponent<CharacterMaster>() == null) return;
 
             collider.transform.root.GetComponent<CharacterMaster>()
-                .RestartAt(RestartPosition);
+                .RestartAt(GameState.Get().CurrentSpawnPoint);
         }
     }
 }

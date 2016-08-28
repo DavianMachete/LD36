@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.ImageEffects;
 
 namespace Assets._Project.Scripts.Cutscenes
@@ -16,6 +17,8 @@ namespace Assets._Project.Scripts.Cutscenes
         public Transform CharacterCamTarget;
 
         public Cutscene1Params CS1Params;
+        public CutscenePuzzleSolvedParams PuzzleSolvedParams;
+        public EndCutsceneParams EndParams;
 
         private Dictionary<string, Func<IEnumerator>> _cutscenes;
 
@@ -24,8 +27,9 @@ namespace Assets._Project.Scripts.Cutscenes
             _cutscenes = new Dictionary<string, Func<IEnumerator>>();
             _cutscenes.Add("cutscene_1", () => Cutscene1());
             _cutscenes.Add("cutscene_2", () => Cutscene2());
+            _cutscenes.Add("puzzle_solved", () => CutscenePuzzleSolved());
+            _cutscenes.Add("ending", () => CutsceneEnding());
         }
-
 
         public static CutsceneManager Get()
         {
@@ -81,6 +85,33 @@ namespace Assets._Project.Scripts.Cutscenes
             Character.EnableControl();
         }
 
+        private IEnumerator CutscenePuzzleSolved()
+        {
+            yield return new WaitForEndOfFrame();
+            SetCameraTarget(PuzzleSolvedParams.Door);
+            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(SetPlayerCamera(0.5f));
+        }
+
+        private IEnumerator CutsceneEnding()
+        {
+            yield return new WaitForEndOfFrame();
+            Character.DisableControl();
+
+            for (int i = 0; i < EndParams.TorchesRoot.transform.childCount; i++)
+            {
+                var torch = EndParams.TorchesRoot.transform.GetChild(i).gameObject;
+                torch.transform.GetChild(0).gameObject.SetActive(true);
+                SetCameraTarget(torch.transform);                
+                yield return new WaitForSeconds(1f);
+            }
+
+            yield return new WaitForSeconds(SetPlayerCamera(6f));
+
+            SceneManager.LoadScene(EndParams.GameOverScene);
+        }
+
+
         private Vector3 _lastPlayerCamPosition;
         private Quaternion _lastPlayerCamRotation;
 
@@ -121,5 +152,16 @@ namespace Assets._Project.Scripts.Cutscenes
     public class Cutscene1Params
     {
         public GameObject Monolith;
+    }
+    [Serializable]
+    public class CutscenePuzzleSolvedParams
+    {
+        public Transform Door;
+    }
+    [Serializable]
+    public class EndCutsceneParams
+    {
+        public Transform TorchesRoot;
+        public string GameOverScene;
     }
 }

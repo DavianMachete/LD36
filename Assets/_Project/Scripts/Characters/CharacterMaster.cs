@@ -7,6 +7,7 @@ using System.Text;
 using UnityEngine;
 using System.Collections;
 using Assets._Project.Scripts.Cameras;
+using Assets._Project.Scripts.GameStates;
 
 namespace Assets._Project.Scripts.Characters
 {
@@ -68,6 +69,14 @@ namespace Assets._Project.Scripts.Characters
         public void StopSittingDown()
         {
             Animator.SetBool("sitting", false);
+        }
+
+        public void Update()
+        {
+            if (Input.GetButtonDown("Respawn"))
+            {
+                RestartAt(GameState.Get().CurrentSpawnPoint);
+            }
         }
     }
 }

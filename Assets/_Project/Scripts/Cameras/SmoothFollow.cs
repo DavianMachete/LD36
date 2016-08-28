@@ -18,6 +18,10 @@ namespace Assets._Project.Scripts.Cameras
         // How much we 
         public float heightDamping = 2.0f;
         public float rotationDamping = 3.0f;
+        public float PositionDamping = 0.1f;
+
+        public Transform AnchorTarget;
+        public float AnchorDamping = 0.01f;
 
         void LateUpdate()
         {
@@ -42,11 +46,19 @@ namespace Assets._Project.Scripts.Cameras
 
             // Set the position of the camera on the x-z plane to:
             // distance meters behind the target
-            transform.position = target.position;
-            transform.position -= currentRotation * Vector3.forward * distance;
 
-            // Set the height of the camera
-            transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+            var targetPos = target.position;
+            targetPos -= currentRotation * Vector3.forward * distance;
+            targetPos = new Vector3(targetPos.x, currentHeight, targetPos.z);
+
+            if (AnchorTarget != null)
+            {
+                transform.position = Vector3.Lerp(transform.position, AnchorTarget.position, AnchorDamping);
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, targetPos, PositionDamping);
+            }
 
             // Always look at the target
             transform.LookAt(target);

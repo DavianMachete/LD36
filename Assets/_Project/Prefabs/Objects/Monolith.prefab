@@ -27,6 +27,7 @@ GameObject:
   - 4: {fileID: 438452}
   - 65: {fileID: 6572172}
   - 114: {fileID: 11425664}
+  - 114: {fileID: 11474216}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -65,6 +66,7 @@ GameObject:
   - 33: {fileID: 3306294}
   - 23: {fileID: 2398754}
   - 65: {fileID: 6558838}
+  - 114: {fileID: 11458278}
   m_Layer: 0
   m_Name: Monolith
   m_TagString: Untagged
@@ -94,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197062}
   m_LocalRotation: {x: -0.0000015348194, y: -0.7071068, z: -0.70710677, w: 0.0000015497205}
-  m_LocalPosition: {x: -16.310936, y: 6.9718795, z: 193.53925}
+  m_LocalPosition: {x: -40.4, y: 0.099999905, z: 229.6}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_LocalEulerAnglesHint: {x: -90, y: -179.9997, z: 0}
   m_Children:
@@ -136,8 +138,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183784}
   m_LocalRotation: {x: 0.0000015348194, y: 0.7071068, z: 0.70710677, w: 0.0000015497205}
-  m_LocalPosition: {x: 0, y: -3.6580007, z: 0.017000446}
-  m_LocalScale: {x: 1.8240732, y: 0.053168304, z: 1.8240722}
+  m_LocalPosition: {x: 0, y: -3.658, z: 0.046}
+  m_LocalScale: {x: 1.8240732, y: 0.11073701, z: 1.8240722}
   m_LocalEulerAnglesHint: {x: -90, y: 179.9998, z: 0}
   m_Children:
   - {fileID: 438452}
@@ -335,6 +337,50 @@ MonoBehaviour:
   Mask:
     serializedVersion: 2
     m_Bits: 768
+  AllowRetrigger: 0
+--- !u!114 &11458278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1d735408eb6e946982dd61b51cff63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TabletActivator: {fileID: 0}
+--- !u!114 &11474216
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4174285ade5f9f44ebb6d86f68cd7346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11458278}
+        m_MethodName: ActivateMonolith
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  Mask:
+    serializedVersion: 2
+    m_Bits: 768
+  AllowRetrigger: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

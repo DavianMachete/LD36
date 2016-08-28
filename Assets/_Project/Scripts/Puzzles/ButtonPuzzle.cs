@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets._Project.Scripts.Puzzles
 {
@@ -10,6 +11,7 @@ namespace Assets._Project.Scripts.Puzzles
     {
         public Behaviour EnableOnCompleted;
 
+        public UnityEvent OnPuzzleSucceded;
 
         public PuzzleButton Button1;
         public PuzzleButton Button2;
@@ -19,9 +21,11 @@ namespace Assets._Project.Scripts.Puzzles
         private PuzzleButton[] _allButtons;
 
         private bool _cleared;
+        private List<int> _pushQueue;
 
         void Start()
         {
+            _pushQueue = new List<int>();
             _allButtons = new[]
             {
                 Button1,
@@ -29,6 +33,19 @@ namespace Assets._Project.Scripts.Puzzles
                 Button3,
                 Button4
             };
+
+            int index = 0;
+            foreach (var button in _allButtons)
+            {
+                int ii = index;
+                button.OnPushed += () => ButtonPushed(ii);
+                index++;
+            }
+        }
+
+        private void ButtonPushed(int index)
+        {
+            _pushQueue.Add(index);
         }
 
         void Update()
@@ -56,6 +73,8 @@ namespace Assets._Project.Scripts.Puzzles
 
         private void ResetButtons()
         {
+            //Debug.Log("Failed - Resetting buttons");
+            _pushQueue.Clear();
             foreach(var button in _allButtons)
             {
                 button.Reset();
@@ -64,18 +83,30 @@ namespace Assets._Project.Scripts.Puzzles
 
         private bool ValidSoFar()
         {
-            return true; // TODO:
+            for (int i = 0; i < _pushQueue.Count; i++)
+            {
+                if (i != _pushQueue[i])
+                    return false;
+            }
+            return true;
         }
 
         private void OpenDoor()
         {
             EnableOnCompleted.enabled = true;
+            _cleared = true;
+
+            if (OnPuzzleSucceded != null)
+            {
+                OnPuzzleSucceded.Invoke();
+            }
         }
 
         private bool PuzzleSolved()
         {
-            // TODO: order... should be section 1, 2, then 3 and 4 should show on the door
-            return _allButtons.All(x => x.Pushed);
+            return _allButtons.All(x => x.Pushed) &&
+                    ValidSoFar() &&
+                    _allButtons.Length == _pushQueue.Count;
         }
     }
 }
