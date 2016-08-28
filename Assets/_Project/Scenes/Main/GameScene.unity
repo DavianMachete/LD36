@@ -16943,6 +16943,59 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 1
   m_Mesh: {fileID: 4300000, guid: d91da0e7cb5134443be63f592268c983, type: 3}
+--- !u!1 &709304421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 709304423}
+  - 167: {fileID: 709304422}
+  m_Layer: 0
+  m_Name: ReverbZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!167 &709304422
+AudioReverbZone:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709304421}
+  m_Enabled: 1
+  m_MinDistance: 64.39
+  m_MaxDistance: 86.9
+  m_ReverbPreset: 9
+  m_Room: -1000
+  m_RoomHF: 0
+  m_DecayTime: 2.91
+  m_DecayHFRatio: 1.3
+  m_Reflections: -602
+  m_ReflectionsDelay: 0.015
+  m_Reverb: -302
+  m_ReverbDelay: 0.022
+  m_HFReference: 5000
+  m_RoomRolloffFactor: 0
+  m_Diffusion: 100
+  m_Density: 100
+  m_LFReference: 250
+  m_RoomLF: 0
+--- !u!4 &709304423
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 709304421}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.8, y: -0.5, z: -101.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1001 &710583394
 Prefab:
   m_ObjectHideFlags: 0
@@ -34405,6 +34458,18 @@ Prefab:
     - target: {fileID: 493338, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -360.44888
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467548, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
+      propertyPath: m_OcclusionIntensity
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467548, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
+      propertyPath: m_Downsampling
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467548, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
+      propertyPath: m_Radius
+      value: 0.467
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bef16412381b3d145b2312dbcc27af9a, type: 2}
