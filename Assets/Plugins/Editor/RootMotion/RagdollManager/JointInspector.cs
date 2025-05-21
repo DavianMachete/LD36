@@ -11,13 +11,14 @@ namespace RootMotion.Dynamics {
 
 		private static bool isDragging;
 
-		public static float DrawJointLimit(Joint joint, string label, Vector3 axis, float limit, Color color, float openValue, bool drawHandles) {
-			if (Event.current.type == EventType.mouseDown) isDragging = false;
-			if (Event.current.type == EventType.mouseUp) isDragging = false;
-
+		public static float DrawJointLimit(Joint joint, string label, Vector3 axis, float limit, Color color, float openValue, bool drawHandles) 
+		{
+			if (Event.current.type == EventType.MouseDown) isDragging = false;
+			if (Event.current.type == EventType.MouseUp) isDragging = false;
+			
 			float radius = HandleUtility.GetHandleSize(joint.transform.position);
 			Vector3 center = joint.transform.TransformPoint(joint.anchor);
-
+			
 			Quaternion axisOffset = Quaternion.AngleAxis(GetViewOffset(joint, axis), axis);
 			Vector3 limitAxis = joint.transform.TransformDirection(axisOffset * axis).normalized;		
 			Vector3 limitAxisOrtho = joint.transform.TransformDirection(axisOffset * new Vector3(axis.z, axis.x, axis.y)).normalized;
@@ -28,9 +29,9 @@ namespace RootMotion.Dynamics {
 			
 			Handles.color = new Color(color.r, color.g, color.b, 1f);
 			GUI.color = new Color(color.r, color.g, color.b, 1f);
-
+			
 			//if (limitAxis != Vector3.zero) Handles.CircleCap(0, center, Quaternion.LookRotation(limitAxis), radius);
-
+			
 			Quaternion angleAxis = Quaternion.AngleAxis(-limit, limitAxis);
 			Vector3 handleVector = angleAxis * limitAxisCross;
 			
@@ -40,30 +41,32 @@ namespace RootMotion.Dynamics {
 			}
 			
 			if (!drawHandles) return limit;
-
-			float newLimit = Handles.ScaleValueHandle(limit, center + handleVector * radius, Quaternion.identity, radius,	Handles.SphereCap, 1);
+			
+			float newLimit = Handles.ScaleValueHandle(limit, center + handleVector * radius, Quaternion.identity, radius,	Handles.SphereHandleCap, 1);
 			//float newLimit = Handles.han(handleRotation, center + handleVector * radius, limit);
-
+			
 			string labelInfo = label;
 			
 			if (newLimit == 0) {
 				labelInfo = "Open " + label;
-				if (Handles.Button(center + handleVector * radius, handleRotation, radius * 0.2f, radius * 0.07f, Handles.SphereCap)) {
+				if (Handles.Button(center + handleVector * radius, handleRotation, radius * 0.2f, radius * 0.07f, Handles.SphereHandleCap)) {
 					newLimit = openValue;
 				}
 			}
 			
 			Handles.Label(center + handleVector * radius * 1.2f, labelInfo);
-
+			
 			if (newLimit != limit) {
 				if (!isDragging) {
 					Undo.RecordObject(joint, "Change Joint Limits");
 					isDragging = true;
 				}
 			}
-
+			
 			GUI.color = Color.white;
 			return newLimit;
+
+			// return 0f;
 		}
 		
 		public static SoftJointLimit NewJointLimit(float limit, SoftJointLimit referenceJointLimit, float min, float max) {

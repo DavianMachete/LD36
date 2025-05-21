@@ -409,7 +409,7 @@ namespace RootMotion.Dynamics {
 
 		void Start() {
 #if UNITY_EDITOR
-			if (Profiler.enabled && visualizeTargetPose) Debug.Log("Switch 'Visualize Target Pose' off when profiling PuppetMaster.", transform);
+			if (UnityEngine.Profiling.Profiler.enabled && visualizeTargetPose) Debug.Log("Switch 'Visualize Target Pose' off when profiling PuppetMaster.", transform);
 #endif
 			if (!initiated && !awakeFailed) {
 				Initiate();
@@ -556,7 +556,7 @@ namespace RootMotion.Dynamics {
 				// Set solver iteration count
 				if (solverIterationCount != lastSolverIterationCount) {
 					for (int i = 0; i < muscles.Length; i++) {
-						muscles[i].rigidbody.solverIterationCount = solverIterationCount;
+						muscles[i].rigidbody.solverIterations = solverIterationCount;
 					}
 
 					lastSolverIterationCount = solverIterationCount;
